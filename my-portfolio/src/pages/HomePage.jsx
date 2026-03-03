@@ -10,10 +10,28 @@ import {
   IconPhone,
 } from "../components/Icons.jsx";
 import emailjs from "@emailjs/browser";
+const calculateAge = (birthDateString) => {
+  const birthDate = new Date(birthDateString);
+  const today = new Date();
+
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const monthDiff = today.getMonth() - birthDate.getMonth();
+
+  if (
+    monthDiff < 0 ||
+    (monthDiff === 0 && today.getDate() < birthDate.getDate())
+  ) {
+    age--;
+  }
+
+  return age;
+};
+
+const AGE = calculateAge("2006-03-06");
 const STATS = [
   { n: "5", sup: "+", label: "Projects shipped" },
   { n: "3", sup: "+", label: "Tech stacks" },
-  { n: "19", sup: "", label: "Years of age" },
+  { n: AGE.toString(), sup: "", label: "Years of age" },
   { n: "∞", sup: "", label: "Curiosity" },
 ];
 
@@ -82,7 +100,7 @@ export default function HomePage({ go }) {
           <div className="p-hero-sub">
             <p className="p-hero-desc">
               <strong>Python Full-Stack Developer</strong> &amp; BCA student
-              based in India. 19 years old, building with Python, JavaScript,
+              based in India. {AGE} years old, building with Python, JavaScript,
               and a deep curiosity for AI.
             </p>
             <div className="p-hero-cta">
@@ -120,7 +138,7 @@ export default function HomePage({ go }) {
         <div className="p-about-grid">
           <div className="p-about-body p-rev">
             <p>
-              I'm a 19-year-old developer <strong>&amp; BCA student</strong>{" "}
+              I'm a {AGE}-year-old developer <strong>&amp; BCA student</strong>{" "}
               from India, advancing in Full-Stack Development with a genuine
               passion for building real things. I believe the best way to learn
               is to <strong>ship — then ship again</strong>.
@@ -148,25 +166,7 @@ export default function HomePage({ go }) {
             </div>
             <div className="p-irow">
               <span className="p-ikey">Age</span>
-              <span className="p-ival">
-                {(() => {
-                  const birthDate = new Date("2006-03-06");
-                  const today = new Date();
-
-                  let age = today.getFullYear() - birthDate.getFullYear();
-
-                  const monthDiff = today.getMonth() - birthDate.getMonth();
-
-                  if (
-                    monthDiff < 0 ||
-                    (monthDiff === 0 && today.getDate() < birthDate.getDate())
-                  ) {
-                    age--;
-                  }
-
-                  return age;
-                })()}
-              </span>
+              <span className="p-ival">{AGE}</span>
             </div>
             <div className="p-irow">
               <span className="p-ikey">Focus</span>
