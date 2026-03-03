@@ -191,7 +191,7 @@ export default function HomePage({ go }) {
               name="App Development"
               tags={["Python", "Flask", "Django", "REST APIs"]}
               desc="Python back-end apps, REST APIs, and full-stack projects — all coming soon."
-              status="soon"
+              status="live"
               onClick={() => go("appdev")}
             />
           </div>
@@ -199,12 +199,6 @@ export default function HomePage({ go }) {
         <div
           style={{ marginTop: 40, display: "flex", gap: 16, flexWrap: "wrap" }}
         >
-          <button className="p-btn" onClick={() => go("webdev")}>
-            <span>Web Dev Projects →</span>
-          </button>
-          <button className="p-outline" onClick={() => go("appdev")}>
-            App Dev Projects
-          </button>
         </div>
       </section>
 
