@@ -148,7 +148,25 @@ export default function HomePage({ go }) {
             </div>
             <div className="p-irow">
               <span className="p-ikey">Age</span>
-              <span className="p-ival">19</span>
+              <span className="p-ival">
+                {(() => {
+                  const birthDate = new Date("2006-03-06");
+                  const today = new Date();
+
+                  let age = today.getFullYear() - birthDate.getFullYear();
+
+                  const monthDiff = today.getMonth() - birthDate.getMonth();
+
+                  if (
+                    monthDiff < 0 ||
+                    (monthDiff === 0 && today.getDate() < birthDate.getDate())
+                  ) {
+                    age--;
+                  }
+
+                  return age;
+                })()}
+              </span>
             </div>
             <div className="p-irow">
               <span className="p-ikey">Focus</span>
@@ -198,8 +216,7 @@ export default function HomePage({ go }) {
         </div>
         <div
           style={{ marginTop: 40, display: "flex", gap: 16, flexWrap: "wrap" }}
-        >
-        </div>
+        ></div>
       </section>
 
       {/* ── Skills ── */}
