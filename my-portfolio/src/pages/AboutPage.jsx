@@ -1,5 +1,5 @@
 import { useReveal, useSkillBars } from "../hooks/index.js";
-import { FullSkillsGrid } from "../components/SkillsGrid.jsx";
+import { HomeSkillsGrid } from "../components/SkillsGrid.jsx";
 
 const J = [
   { num:"01", title:"Python Full Stack — BCA Course", text:"Studying Python Full Stack as part of my BCA degree. Built first deployed project — an Expense Tracker. Learning by shipping." },
@@ -33,7 +33,7 @@ export default function AboutPage({ go }) {
       </section>
       <section className="p-sec" style={{borderTop:"1px solid var(--border)"}}>
         <div className="p-slabel p-rev"><div className="p-stag">02 — Skills</div><div className="p-srule"/></div>
-        <div className="p-rev"><FullSkillsGrid/></div>
+        <div className="p-rev"><HomeSkillsGrid/></div>
       </section>
       <section className="p-sec" style={{borderTop:"1px solid var(--border)"}}>
         <div className="p-slabel p-rev"><div className="p-stag">03 — Philosophy</div><div className="p-srule"/></div>
