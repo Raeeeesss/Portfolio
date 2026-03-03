@@ -59,40 +59,57 @@ export default function AppDevPage({ go }) {
       <div className="p-intro">
         <div className="p-intro-inner">
           <div className="p-intro-eye">Python · Back-End · APIs · ML</div>
-          <h1 className="p-intro-title">App<br /><em>Development.</em></h1>
+          <h1 className="p-intro-title">
+            App
+            <br />
+            <em>Development.</em>
+          </h1>
           <p className="p-intro-sub">
-            Python-powered back-end apps, REST APIs, Django and Flask projects, and early AI/ML experiments — all coming soon.
+            Python-powered back-end apps, REST APIs, Django and Flask projects,
+            and early AI/ML experiments — all coming soon.
           </p>
         </div>
       </div>
 
       <section className="p-sec">
-        <div className="p-slabel p-rev"><div className="p-stag">All Projects</div><div className="p-srule" /></div>
-        <div className="p-cards-grid p-rev">
-          {APP_PROJECTS.map(p => <ProjectCard key={p.num} {...p} />)}
+        <div className="p-slabel p-rev">
+          <div className="p-stag">All Projects</div>
+          <div className="p-srule" />
         </div>
-      </section>
-
-      <section className="p-sec" style={{ borderTop: "1px solid var(--border)" }}>
-        <div className="p-slabel p-rev"><div className="p-stag">Tech Stack</div><div className="p-srule" /></div>
-        <div className="p-stack-row p-rev">
-          {["Python 3", "Flask", "Django", "REST APIs", "SQLite", "MySQL", "PostgreSQL", "JWT Auth", "NumPy", "Pandas", "scikit-learn", "Git"].map(t => (
-            <span className="p-schip" key={t}>{t}</span>
+        <div className="p-cards-grid p-rev">
+          {APP_PROJECTS.map((p) => (
+            <ProjectCard key={p.num} {...p} />
           ))}
         </div>
       </section>
 
-      <div className="p-cta">
-        <div className="p-rev">
-          <h2 className="p-cta-title">Want to <em>collaborate?</em></h2>
-          <p className="p-cta-body">Open to back-end freelance work, API integrations, and Python projects of all sizes.</p>
-          <div className="p-cta-btns">
-            <button className="p-btn" onClick={() => go("home", "contact")}><span>Get in touch →</span></button>
-            <button className="p-outline" onClick={() => go("webdev")}>View Web Dev</button>
-            <button className="p-outline" onClick={() => go("home")}>Back to Home</button>
+      <section
+        className="p-sec"
+        style={{ borderTop: "1px solid var(--border)" }}
+      >
+        <div className="p-cta">
+          <div className="p-rev">
+            <h2 className="p-cta-title">
+              Want to <em>collaborate?</em>
+            </h2>
+            <p className="p-cta-body">
+              Open to back-end freelance work, API integrations, and Python
+              projects of all sizes.
+            </p>
+            <div className="p-cta-btns">
+              <button className="p-btn" onClick={() => go("home", "contact")}>
+                <span>Get in touch →</span>
+              </button>
+              <button className="p-outline" onClick={() => go("webdev")}>
+                View Web Dev
+              </button>
+              <button className="p-outline" onClick={() => go("home")}>
+                Back to Home
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 }

@@ -240,7 +240,7 @@ export default function HomePage({ go }) {
               new challenges.
             </p>
             <div className="p-clinks">
-              <a href="mailto:raeeeesss0@gmail.com" className="p-clink">
+              <a className="p-clink">
                 <div className="p-clink-l">
                   <div className="p-cico">
                     <IconEmail />
@@ -292,7 +292,7 @@ export default function HomePage({ go }) {
                   <IconArrow />
                 </div>
               </a>
-              <a href="tel:+918138082848" className="p-clink">
+              <a className="p-clink">
                 <div className="p-clink-l">
                   <div className="p-cico">
                     <IconPhone />
