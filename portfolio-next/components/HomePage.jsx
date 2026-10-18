@@ -9,9 +9,8 @@ import { motion, AnimatePresence, useInView, useMotionValue, useSpring, useMotio
 const CvScrollRootCtx = createContext(null);
 import gsap from "gsap";
 import Lenis from "lenis";
-import { ArrowRight, Download, Mail, Globe, Smartphone, Layers, Cpu, Zap, TrendingUp, GraduationCap, Code, Rocket, Server, Database, Search, Palette, ChevronDown } from "lucide-react";
+import { ArrowRight, Download, Mail, Globe, Smartphone, Layers, Cpu, Zap, TrendingUp, GraduationCap, Code, Rocket, Server, Database, Search, Palette } from "lucide-react";
 import Hero from "./Hero";
-import DecayCard from "./DecayCard";
 
 /* ── Inline brand icons (not in this build of lucide-react) ── */
 const InstagramIcon = ({ size = 16, strokeWidth = 1.8 }) => (
@@ -170,7 +169,7 @@ const SERVICES = [
     Icon: TrendingUp,
     title: 'Digital Consulting',
     short: 'Strategy for your digital presence',
-    desc: 'Technical strategy, product roadmaps, and hands-on consulting to help founders and teams make the right decisions faster and ship with confidence.',
+    desc: 'Technical strategy, product roadmaps, and hands-on consulting to help businesses and teams make the right decisions faster and ship with confidence.',
   },
 ];
 
@@ -282,18 +281,18 @@ const timeline = [
   },
   {
     year: "2025",
-    role: "Founder & COO",
-    org: "Narrs Technologies",
-    desc: "Founded and lead Narrs — a technology company building software, AI solutions, and digital transformation systems for businesses.",
-    tags: ["Leadership", "Product Strategy", "AI Integration", "Operations", "Team Building"],
-    current: true,
+    role: "Full Stack Engineer",
+    org: "Product & Systems Engineering",
+    desc: "Engineering scalable web applications, AI integrations, and cloud solutions with focus on performance, security, and developer experience.",
+    tags: ["System Architecture", "AI Integration", "Next.js", "PostgreSQL", "Cloud"],
+    current: false,
   },
   {
     year: "2026",
-    role: "Scaling AI & Products",
-    org: "Narrs Technologies",
-    desc: "Expanding Narrs into intelligent systems, business automation, and scalable growth platforms that bridge strategy and technology.",
-    tags: ["AI / ML", "SaaS", "Business Automation", "Growth Systems"],
+    role: "Scaling AI & Digital Products",
+    org: "Independent Practice",
+    desc: "Developing intelligent systems, business automation solutions, and scalable modern web platforms bridging design and engineering.",
+    tags: ["AI / ML", "SaaS", "Business Automation", "Next.js", "TypeScript"],
     current: true,
   },
 ];
@@ -400,7 +399,7 @@ function CursorRevealImg({ src, alt }) {
       {/* Caption */}
       <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '20px 22px', zIndex: 3 }}>
         <p style={{ margin: 0, fontSize: '0.5rem', fontWeight: 800, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.38)' }}>Kerala, India</p>
-        <p style={{ margin: '5px 0 0', fontSize: '0.86rem', fontWeight: 700, color: '#fff', letterSpacing: '-0.01em' }}>Founder · Developer · Operator</p>
+        <p style={{ margin: '5px 0 0', fontSize: '0.86rem', fontWeight: 700, color: '#fff', letterSpacing: '-0.01em' }}>Full Stack Developer · Software Engineer</p>
       </div>
     </div>
   );
@@ -554,7 +553,7 @@ function GrowthChart({ ML }) {
   const circ = 2 * Math.PI * 10;
   return (
     <div>
-      <p style={ML}>Company growth</p>
+      <p style={ML}>Product velocity</p>
       <svg viewBox="0 0 140 72" style={{ width: '100%', height: 72, display: 'block', marginBottom: 8 }}>
         {[0.25, 0.5, 0.75].map((f, i) => (
           <line key={i} x1="0" y1={f * 72} x2="140" y2={f * 72} stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
@@ -881,27 +880,12 @@ export default function HomePage() {
   const lenisRef = useRef(null);
   const [pastHero, setPastHero] = useState(false);
 
-  const [activeSvc, setActiveSvc] = useState(0);
   const [projIdx,   setProjIdx]   = useState(0);
   const workGridRef = useRef(null);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState(null);
   const navY = useMotionValue(-100);
   const navOpacity = useMotionValue(0);
   const solidOnce = useRef(false);
-
-  /* per-section scroll visibility */
-  const [stmtRef,    stmtVis]    = useVisible(0.3,  0.05);
-  const [aboutRef,   aboutVis]   = useVisible(0.08, 0.04);
-  const [svcRef,     svcVis]     = useVisible(0.08, 0.04);
-
-  /* Auto-cycle services every 3s */
-  useEffect(() => {
-    const id = setInterval(() => {
-      setActiveSvc(prev => (prev + 1) % SERVICES.length);
-    }, 3000);
-    return () => clearInterval(id);
-  }, []);
 
   /* Project scroll tracker */
   useEffect(() => {
@@ -914,8 +898,6 @@ export default function HomePage() {
     grid.addEventListener('scroll', onScroll, { passive: true });
     return () => grid.removeEventListener('scroll', onScroll);
   }, []);
-  const [narrsRef,   narrsVis]   = useVisible(0.1,  0.04);
-  const [visionRef,  visionVis]  = useVisible(0.08, 0.04);
   const [workHdrRef, workHdrVis] = useVisible(0.2,  0.05);
   const [cvRef,      cvVis]      = useVisible(0.08, 0.04);
   const [ctaRef,     ctaVis]     = useVisible(0.15, 0.05);
@@ -978,14 +960,13 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="founder-site">
+    <div className="portfolio-site">
 
       {/* ── Floating pill navbar ── */}
       <motion.header
         className={`site-header${pastHero ? ' site-header--solid' : ''}`}
         role="banner"
         style={{ y: navY, opacity: navOpacity }}
-        onMouseLeave={() => setOpenDropdown(null)}
       >
         {/* Logo */}
         <a className="brand-mark" href="#home" aria-label="Mohammed Raees — home">
@@ -997,28 +978,8 @@ export default function HomePage() {
         <nav className="site-nav" aria-label="Primary navigation">
           <a href="#work">Work</a>
           <a href="#about">About</a>
-
-          {/* Services with dropdown */}
-          <div className="nav-dropdown-wrap" onMouseEnter={() => setOpenDropdown('services')} onMouseLeave={() => setOpenDropdown(null)}>
-            <a href="#services" className="nav-has-dropdown">
-              Services <ChevronDown size={12} strokeWidth={2.5} className={`nav-chevron${openDropdown === 'services' ? ' nav-chevron--open' : ''}`} />
-            </a>
-            {openDropdown === 'services' && (
-              <div className="nav-dropdown">
-                <div className="nav-dropdown-grid">
-                  {SERVICES.slice(0, 8).map(svc => (
-                    <a key={svc.title} href="#services" className="nav-dropdown-item">
-                      <span className="nav-dropdown-icon"><svc.Icon size={14} strokeWidth={1.6} /></span>
-                      <span>{svc.title}</span>
-                    </a>
-                  ))}
-                </div>
-                <a href="#services" className="nav-dropdown-footer">View all services <ArrowRight size={11} strokeWidth={2.5} /></a>
-              </div>
-            )}
-          </div>
-
-          <a href="#narrs">Narrs</a>
+          <a href="#services">Services</a>
+          <a href="#cv">Experience</a>
           <a href="#contact">Contact</a>
         </nav>
 
@@ -1037,7 +998,7 @@ export default function HomePage() {
       {menuOpen && (
         <div className="mobile-nav-overlay" onClick={() => setMenuOpen(false)}>
           <nav className="mobile-nav" onClick={e => e.stopPropagation()}>
-            {[['#home','Home'],['#work','Work'],['#about','About'],['#services','Services'],['#narrs','Narrs'],['#contact','Contact']].map(([href, label]) => (
+            {[['#home','Home'],['#work','Work'],['#about','About'],['#services','Services'],['#cv','Experience'],['#contact','Contact']].map(([href, label]) => (
               <a key={href} href={href} className="mobile-nav-link" onClick={() => setMenuOpen(false)}>{label}</a>
             ))}
           </nav>
@@ -1056,330 +1017,268 @@ export default function HomePage() {
         </div>
 
         {/* ── 2. About ── */}
-        <section id="about" aria-label="About Mohammed Raees" style={{ background: '#fff', overflow: 'hidden', padding: 'clamp(56px,8vw,104px) clamp(24px,6vw,80px)' }}>
+        <section id="about" aria-label="About Mohammed Raees" style={{ background: '#fff', overflow: 'hidden', padding: 'clamp(64px,9vw,112px) clamp(24px,6vw,80px)' }}>
           <style>{`
-            .about-v2-grid { display: grid; grid-template-columns: 0.55fr 1.45fr; gap: clamp(40px,6vw,88px); align-items: start; }
-            @media (max-width: 820px) { .about-v2-grid { grid-template-columns: 1fr; } }
+            .about-v2-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(48px,7vw,96px); align-items: start; max-width: 1240px; margin: 0 auto; }
+            @media (max-width: 860px) { .about-v2-grid { grid-template-columns: 1fr; gap: 36px; } }
           `}</style>
-
-          {/* Kicker */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }} transition={{ duration: 0.5 }}
-            style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 'clamp(24px,3.5vw,40px)' }}
-          >
-            <span style={{ width: 28, height: 1.5, background: '#0B0B0C', display: 'inline-block' }} />
-            <span style={{ fontSize: '0.65rem', fontWeight: 800, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#0B0B0C' }}>About</span>
-          </motion.div>
 
           <div className="about-v2-grid">
 
-            {/* LEFT — portrait */}
-            <div style={{ position: 'relative' }}>
-              <div style={{ boxShadow: '0 48px 80px -8px rgba(0,0,0,0.55)', borderRadius: 24, overflow: 'hidden', width: '100%' }}>
-                <DecayCard
-                  width="100%"
-                  height={480}
-                  image="/mohammed%20raees%20img.png"
-                />
-              </div>
-            </div>
+            {/* LEFT — Headline & Stats */}
+            <div>
+              {/* Kicker */}
+              <motion.div
+                initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }} transition={{ duration: 0.5 }}
+                style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}
+              >
+                <span style={{ width: 28, height: 1.5, background: '#0B0B0C', display: 'inline-block' }} />
+                <span style={{ fontSize: '0.65rem', fontWeight: 800, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#0B0B0C' }}>About Me</span>
+              </motion.div>
 
-            {/* RIGHT — text */}
-            <div style={{ paddingTop: 'clamp(32px,3vw,48px)' }}>
-              <div style={{ overflow: 'hidden', marginBottom: 22 }}>
+              <div style={{ overflow: 'hidden', marginBottom: 18 }}>
                 <motion.div initial={{ y: '115%' }} whileInView={{ y: 0 }} viewport={{ once: true, amount: 0.8 }} transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}>
-                  <ScrambleText text="FULL STACK DEVELOPER · FOUNDER · COO" delay={300} style={{ fontSize: '0.62rem', fontWeight: 800, letterSpacing: '0.14em', color: '#2547FF', display: 'block' }} />
+                  <ScrambleText text="FULL STACK DEVELOPER · SOFTWARE ENGINEER" delay={300} style={{ fontSize: '0.62rem', fontWeight: 800, letterSpacing: '0.14em', color: '#2547FF', display: 'block' }} />
                 </motion.div>
               </div>
 
               <LineByLine
                 tag="h3"
-                style={{ fontFamily: 'var(--font-playfair),Georgia,serif', fontSize: 'clamp(1.7rem,3vw,2.8rem)', fontWeight: 900, letterSpacing: '-0.03em', color: '#0B0B0C', lineHeight: 1.15, margin: '0 0 24px' }}
+                style={{ fontFamily: 'var(--font-playfair),Georgia,serif', fontSize: 'clamp(2rem,3.8vw,3.2rem)', fontWeight: 900, letterSpacing: '-0.03em', color: '#0B0B0C', lineHeight: 1.15, margin: '0 0 32px' }}
                 baseDelay={0.05}
                 lines={[
-                  'From software builder to',
-                  <><span style={{ position: 'relative', display: 'inline-block' }}>founder<WavyUnderline color="#2547FF" delay={0} wavy /></span>{' '}and operator.</>,
+                  'Building modern software &',
+                  <><span style={{ position: 'relative', display: 'inline-block' }}>scalable<WavyUnderline color="#2547FF" delay={0} wavy /></span>{' '}digital systems.</>,
                 ]}
               />
 
-              <motion.p initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: 0.3 }} transition={{ duration: 0.7, delay: 0.18 }}
-                style={{ fontSize: '0.97rem', color: '#6B6A66', lineHeight: 1.84, margin: '0 0 16px' }}>
-                I&rsquo;m a fullstack developer and BCA graduate who builds{' '}
-                <span style={{ position: 'relative', display: 'inline' }}>SaaS products<WavyUnderline color="#2547FF" delay={0.5} wavy={false} /></span>
-                , web apps, and immersive digital experiences. As Founder &amp; COO of{' '}
-                <strong style={{ color: '#0B0B0C', fontWeight: 700 }}>Narrs Technologies</strong>, I connect engineering decisions to business outcomes.
-              </motion.p>
-
-              <motion.p initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: 0.3 }} transition={{ duration: 0.7, delay: 0.26 }}
-                style={{ fontSize: '0.97rem', color: '#6B6A66', lineHeight: 1.84, margin: '0 0 32px' }}>
-                My work started with writing code and evolved into a broader mission: helping businesses use technology with more{' '}
-                <span style={{ position: 'relative', display: 'inline' }}>clarity, speed, and intelligence<WavyUnderline color="rgba(11,11,12,0.4)" delay={0.4} wavy={false} /></span>
-                . Three years in — still building things that matter.
-              </motion.p>
-
-              <motion.div initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.32 }}
-                style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 10, marginBottom: 32 }}>
+              {/* Stats bento */}
+              <motion.div initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.2 }}
+                style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 12 }}>
                 {[
-                  { Icon: Layers,     stat: '12+', label: 'Projects'  },
-                  { Icon: Zap,        stat: '3+',  label: 'Years'     },
-                  { Icon: Cpu,        stat: '2',   label: 'Products'  },
-                  { Icon: TrendingUp, stat: '∞',   label: 'Growth'    },
-                ].map(({ Icon, stat, label }) => (
-                  <div key={label} style={{ textAlign: 'center', padding: '14px 8px', borderRadius: 12, background: '#F7F6F2', border: '1px solid rgba(11,11,12,0.06)' }}>
-                    <Icon size={15} strokeWidth={1.6} style={{ color: '#2547FF', margin: '0 auto 7px', display: 'block' }} />
-                    <p style={{ margin: 0, fontSize: '1.12rem', fontWeight: 900, color: '#0B0B0C', letterSpacing: '-0.03em', lineHeight: 1 }}>{stat}</p>
-                    <p style={{ margin: '3px 0 0', fontSize: '0.55rem', fontWeight: 700, color: '#6B6A66', textTransform: 'uppercase', letterSpacing: '0.08em' }}>{label}</p>
+                  { Icon: Layers,     stat: '12+', label: 'Shipped Projects', sub: 'Production apps' },
+                  { Icon: Zap,        stat: '3+',  label: 'Years Experience', sub: 'Continuous building' },
+                  { Icon: Cpu,        stat: '2',   label: 'SaaS Products',    sub: 'Active platforms' },
+                  { Icon: TrendingUp, stat: '∞',   label: 'Growth Mindset',   sub: 'Engineered for scale' },
+                ].map(({ Icon, stat, label, sub }) => (
+                  <div key={label} style={{ padding: '20px 18px', borderRadius: 16, background: '#F7F6F2', border: '1px solid rgba(11,11,12,0.06)' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
+                      <Icon size={18} strokeWidth={1.8} style={{ color: '#2547FF' }} />
+                      <span style={{ fontSize: '0.68rem', color: '#6B6A66', fontWeight: 500 }}>{sub}</span>
+                    </div>
+                    <p style={{ margin: 0, fontSize: '1.6rem', fontWeight: 900, color: '#0B0B0C', letterSpacing: '-0.03em', lineHeight: 1 }}>{stat}</p>
+                    <p style={{ margin: '6px 0 0', fontSize: '0.62rem', fontWeight: 700, color: '#6B6A66', textTransform: 'uppercase', letterSpacing: '0.08em' }}>{label}</p>
                   </div>
                 ))}
               </motion.div>
+            </div>
 
-              <motion.div initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.65, delay: 0.4 }}
-                style={{ position: 'relative', paddingLeft: 22 }}>
-                <motion.div initial={{ scaleY: 0 }} whileInView={{ scaleY: 1 }} viewport={{ once: true }} transition={{ duration: 0.55, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                  style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: 3, background: '#2547FF', transformOrigin: 'top', borderRadius: 2 }} />
+            {/* RIGHT — Bio & Quote */}
+            <div style={{ paddingTop: 'clamp(12px,2vw,28px)' }}>
+              <motion.p initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: 0.3 }} transition={{ duration: 0.7, delay: 0.18 }}
+                style={{ fontSize: '1.05rem', color: '#4A4944', lineHeight: 1.85, margin: '0 0 20px', fontWeight: 400 }}>
+                I&rsquo;m a fullstack developer and BCA graduate who builds{' '}
+                <span style={{ position: 'relative', display: 'inline', fontWeight: 600, color: '#0B0B0C' }}>SaaS products<WavyUnderline color="#2547FF" delay={0.5} wavy={false} /></span>
+                , modern web applications, and intuitive digital interfaces. I connect sound architectural decisions directly to real business outcomes.
+              </motion.p>
+
+              <motion.p initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: 0.3 }} transition={{ duration: 0.7, delay: 0.26 }}
+                style={{ fontSize: '0.98rem', color: '#6B6A66', lineHeight: 1.84, margin: '0 0 36px' }}>
+                My journey started with foundational software engineering and evolved into delivering end-to-end platforms: from database design and backend APIs to polished, pixel-perfect user experiences. Over the past three years, I&rsquo;ve focused on one core objective — building software that functions seamlessly, loads instantly, and creates tangible value.
+              </motion.p>
+
+              {/* Highlight callout box */}
+              <motion.div initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.65, delay: 0.35 }}
+                style={{ position: 'relative', padding: '24px 28px', background: '#F7F6F2', borderRadius: 16, borderLeft: '4px solid #2547FF' }}>
                 <p style={{ margin: 0, fontSize: '1.02rem', fontStyle: 'italic', color: '#0B0B0C', lineHeight: 1.72, fontFamily: 'var(--font-playfair),Georgia,serif', fontWeight: 500 }}>
                   &ldquo;The strongest products aren&rsquo;t built for attention. They remove friction, improve decisions, and create measurable value.&rdquo;
                 </p>
+                <p style={{ margin: '10px 0 0', fontSize: '0.72rem', fontWeight: 700, color: '#6B6A66', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+                  — Mohammed Raees
+                </p>
               </motion.div>
             </div>
+
           </div>
         </section>
 
         {/* Wave: about white → services */}
-        <div style={{ lineHeight: 0, background: '#fff', marginTop: -1 }}>
+        <div style={{ lineHeight: 0, background: '#FAFAF8', marginTop: -1 }}>
           <svg viewBox="0 0 1440 28" preserveAspectRatio="none" style={{ display: 'block', width: '100%', height: 28 }}>
-            <path d="M0,14 C480,28 960,0 1440,14 L1440,28 L0,28 Z" fill="#F7F6F2" />
+            <path d="M0,14 C480,28 960,0 1440,14 L1440,28 L0,28 Z" fill="#fff" />
           </svg>
         </div>
 
-        {/* ── Services ── */}
-        <section id="services" aria-label="Services" style={{ padding: 'clamp(52px,7vw,96px) clamp(24px,6vw,80px)', background: '#fff' }}>
-          <div ref={svcRef} style={{ maxWidth: 1300, margin: '0 auto' }}>
+        {/* ── Services (What I Offer) ── */}
+        <section id="services" aria-label="Services" style={{ padding: 'clamp(64px,8vw,104px) clamp(24px,6vw,80px)', background: '#FAFAF8' }}>
+          <div style={{ maxWidth: 1240, margin: '0 auto' }}>
 
-            <motion.p
-              className="section-kicker"
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              style={{ margin: '0 0 18px', textAlign: 'center' }}
-            >
-              What I Offer
-            </motion.p>
+            <div style={{ textAlign: 'center', maxWidth: 640, margin: '0 auto 56px' }}>
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, marginBottom: 14 }}
+              >
+                <span style={{ width: 20, height: 1.5, background: '#2547FF', display: 'inline-block' }} />
+                <span style={{ fontSize: '0.65rem', fontWeight: 800, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#2547FF' }}>What I Offer</span>
+                <span style={{ width: 20, height: 1.5, background: '#2547FF', display: 'inline-block' }} />
+              </motion.div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12, marginBottom: 40, textAlign: 'center' }}>
-              <LineByLine
-                tag="h2"
-                style={{ fontFamily: 'var(--font-playfair),Georgia,serif', fontSize: 'clamp(1.8rem,3.5vw,3.2rem)', fontWeight: 700, letterSpacing: '-0.03em', color: '#0B0B0C', lineHeight: 1.05 }}
-                lines={['Premium Services']}
-              />
-              <LineByLine
-                tag="p"
-                style={{ maxWidth: 480, fontSize: '0.92rem', color: '#6B6A66', lineHeight: 1.65, margin: 0 }}
-                baseDelay={0.08}
-                lines={['Comprehensive digital solutions tailored to elevate your business']}
-              />
+              <h2 style={{ fontFamily: 'var(--font-playfair),Georgia,serif', fontSize: 'clamp(2rem,4vw,3.4rem)', fontWeight: 900, letterSpacing: '-0.03em', color: '#0B0B0C', lineHeight: 1.1, margin: '0 0 16px' }}>
+                Engineering &amp; Digital Solutions
+              </h2>
+              <p style={{ fontSize: '0.96rem', color: '#6B6A66', lineHeight: 1.7, margin: 0 }}>
+                Specialized capabilities designed to help businesses ship faster, scale reliably, and automate critical operations.
+              </p>
             </div>
 
-            {/* Pipeline */}
-            <style>{`
-              @keyframes svcLiquid { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
-              @keyframes svcPipeGlow { 0%,100% { opacity:0.2; } 50% { opacity:0.65; } }
-              .svc-icon-node { transition: background 0.3s, border-color 0.3s, box-shadow 0.3s, color 0.3s; }
-            `}</style>
-
-            <div style={{ maxWidth: 960, margin: '0 auto 28px' }}>
-              {/* 3-row S-shaped pipeline — all 12 services */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gridTemplateRows: '120px 120px 120px', position: 'relative' }}>
-
-                <svg viewBox="0 0 960 360" preserveAspectRatio="none"
-                  style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
-
-                  {/* Base pipe — S-curve through all 12 icon centers */}
-                  <path
-                    d="M 120,60 C 200,42 280,78 360,60 C 440,42 520,78 600,60 C 680,42 760,78 840,60 C 930,60 930,180 840,180 C 760,198 680,162 600,180 C 520,198 440,162 360,180 C 280,198 200,162 120,180 C 30,180 30,300 120,300 C 200,282 280,318 360,300 C 440,282 520,318 600,300 C 680,282 760,318 840,300"
-                    stroke="rgba(11,11,12,0.07)" strokeWidth="2" fill="none"
-                    strokeLinecap="round" vectorEffect="non-scaling-stroke" />
-
-                  {/* Glow */}
-                  <path
-                    d="M 120,60 C 200,42 280,78 360,60 C 440,42 520,78 600,60 C 680,42 760,78 840,60 C 930,60 930,180 840,180 C 760,198 680,162 600,180 C 520,198 440,162 360,180 C 280,198 200,162 120,180 C 30,180 30,300 120,300 C 200,282 280,318 360,300 C 440,282 520,318 600,300 C 680,282 760,318 840,300"
-                    stroke="rgba(37,71,255,0.18)" strokeWidth="10" fill="none"
-                    strokeLinecap="round" vectorEffect="non-scaling-stroke"
-                    style={{ animation: 'svcPipeGlow 3s ease-in-out infinite' }} />
-
-                  {/* Liquid flow */}
-                  <path
-                    d="M 120,60 C 200,42 280,78 360,60 C 440,42 520,78 600,60 C 680,42 760,78 840,60 C 930,60 930,180 840,180 C 760,198 680,162 600,180 C 520,198 440,162 360,180 C 280,198 200,162 120,180 C 30,180 30,300 120,300 C 200,282 280,318 360,300 C 440,282 520,318 600,300 C 680,282 760,318 840,300"
-                    stroke="#2547FF" strokeWidth="2.5" fill="none"
-                    strokeLinecap="round" vectorEffect="non-scaling-stroke"
-                    pathLength="1000" strokeDasharray="40 60"
-                    style={{ animation: 'svcLiquid 2s linear infinite' }} />
-                </svg>
-
-                {/* Snake order: row1 L→R [0-3] · row2 R→L [7,6,5,4] · row3 L→R [8-11] */}
-                {[0,1,2,3,7,6,5,4,8,9,10,11].map((svcIdx) => {
-                  const svc = SERVICES[svcIdx];
-                  const isActive = activeSvc === svcIdx;
-                  return (
-                    <div key={svcIdx} onClick={() => setActiveSvc(svcIdx)}
-                      style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', position: 'relative', zIndex: 1 }}>
-                      <div className="svc-icon-node" style={{
-                        width: 54, height: 54, borderRadius: '50%',
-                        background: isActive ? '#0B0B0C' : '#fff',
-                        border: `1.5px solid ${isActive ? '#0B0B0C' : 'rgba(11,11,12,0.13)'}`,
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        color: isActive ? '#fff' : '#0B0B0C',
-                        boxShadow: isActive
-                          ? '0 0 0 8px rgba(37,71,255,0.12), 0 0 24px rgba(37,71,255,0.38)'
-                          : '0 2px 10px rgba(0,0,0,0.07)',
-                      }}>
-                        <svc.Icon size={21} strokeWidth={1.6} />
-                      </div>
+            {/* Clean 6-card services grid */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+              gap: 24,
+              marginBottom: 72,
+            }}>
+              {[
+                {
+                  num: '01',
+                  Icon: Globe,
+                  title: 'Web Applications & SaaS',
+                  desc: 'Full-stack web applications and platforms built with Next.js, React, Node.js, and modern databases. Fast, responsive, accessible, and ready for production scale.',
+                  tags: ['Next.js', 'React', 'Node.js', 'PostgreSQL'],
+                },
+                {
+                  num: '02',
+                  Icon: Cpu,
+                  title: 'AI Systems Engineering',
+                  desc: 'Practical LLM integrations, RAG pipelines, intelligent agent workflows, and AI tooling that solve operational challenges and automate business intelligence.',
+                  tags: ['OpenAI', 'Python', 'Vector DBs', 'RAG'],
+                },
+                {
+                  num: '03',
+                  Icon: Smartphone,
+                  title: 'Mobile App Development',
+                  desc: 'Cross-platform mobile applications for iOS and Android using React Native and Expo. Smooth performance, native UX, and seamless app store releases.',
+                  tags: ['React Native', 'Expo', 'iOS', 'Android'],
+                },
+                {
+                  num: '04',
+                  Icon: Layers,
+                  title: 'UI/UX & Product Design',
+                  desc: 'Intuitive, conversion-centered interface design and component libraries. Turning complex workflows into clean, effortless user experiences in Figma.',
+                  tags: ['Figma', 'Design Systems', 'Prototyping', 'UI/UX'],
+                },
+                {
+                  num: '05',
+                  Icon: Zap,
+                  title: 'Intelligent Automation',
+                  desc: 'End-to-end automation of business processes — CRM pipelines, custom internal tools, webhooks, and third-party API integrations that eliminate repetitive work.',
+                  tags: ['APIs', 'CRMs', 'Automation', 'Workflows'],
+                },
+                {
+                  num: '06',
+                  Icon: Server,
+                  title: 'Cloud & Infrastructure',
+                  desc: 'Cloud provisioning, microservices, API architecture, CI/CD pipelines, and serverless hosting on Vercel and AWS designed to scale without costly rewrites.',
+                  tags: ['AWS', 'Vercel', 'Docker', 'Prisma'],
+                },
+              ].map((svc) => (
+                <motion.div
+                  key={svc.num}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.15 }}
+                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                  whileHover={{ y: -5, boxShadow: '0 20px 40px -10px rgba(11,11,12,0.08)' }}
+                  style={{
+                    background: '#ffffff',
+                    borderRadius: 20,
+                    padding: '36px 32px',
+                    border: '1px solid rgba(11,11,12,0.08)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    transition: 'border-color 0.25s, box-shadow 0.25s',
+                  }}
+                >
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 22 }}>
                       <span style={{
-                        fontSize: '0.5rem', fontWeight: 800, letterSpacing: '0.09em', textTransform: 'uppercase',
-                        color: isActive ? '#0B0B0C' : 'rgba(11,11,12,0.3)',
-                        marginTop: 9, textAlign: 'center', lineHeight: 1.3, transition: 'color 0.3s', maxWidth: 90,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: 48,
+                        height: 48,
+                        borderRadius: 14,
+                        background: '#F7F6F2',
+                        color: '#0B0B0C',
+                        border: '1px solid rgba(11,11,12,0.06)',
                       }}>
-                        {svc.title}
+                        <svc.Icon size={22} strokeWidth={1.7} />
+                      </span>
+                      <span style={{ fontSize: '0.78rem', fontWeight: 800, color: 'rgba(11,11,12,0.24)', letterSpacing: '0.04em', fontFamily: 'monospace' }}>
+                        {svc.num}
                       </span>
                     </div>
-                  );
-                })}
-              </div>
-            </div>
 
-            {/* Detail panel */}
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeSvc}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                style={{ marginTop: 14 }}
-              >
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: 28, padding: '32px 36px', background: '#ffffff', borderRadius: 16, border: '1px solid #e8e7e3', boxShadow: '0 2px 12px rgba(11,11,12,0.06)' }}>
-                  <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 56, height: 56, borderRadius: 14, background: '#fff', border: '1px solid rgba(11,11,12,0.08)', boxShadow: '0 4px 14px rgba(11,11,12,0.06)', color: '#0B0B0C', flexShrink: 0 }}>
-                    {(() => { const S = SERVICES[activeSvc]; return <S.Icon size={26} strokeWidth={1.5} />; })()}
-                  </span>
-                  <div style={{ flex: 1 }}>
-                    <h3 style={{ fontFamily: 'var(--font-playfair),Georgia,serif', fontSize: '1.3rem', fontWeight: 700, letterSpacing: '-0.02em', color: '#0B0B0C', marginBottom: 4 }}>{SERVICES[activeSvc].title}</h3>
-                    <p style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#6B6A66', marginBottom: 14 }}>{SERVICES[activeSvc].short}</p>
-                    <p style={{ fontSize: '0.95rem', color: '#6B6A66', lineHeight: 1.75, maxWidth: 680 }}>{SERVICES[activeSvc].desc}</p>
-                    <div style={{ display: 'flex', gap: 6, marginTop: 20 }}>
-                      {SERVICES.map((_, i) => (
-                        <button key={i} onClick={() => setActiveSvc(i)} style={{ width: i === activeSvc ? 20 : 6, height: 6, borderRadius: 999, background: i === activeSvc ? '#0B0B0C' : 'rgba(11,11,12,0.15)', border: 'none', cursor: 'pointer', padding: 0, transition: 'all 0.3s' }} />
-                      ))}
-                    </div>
+                    <h3 style={{
+                      fontFamily: 'var(--font-playfair),Georgia,serif',
+                      fontSize: '1.25rem',
+                      fontWeight: 800,
+                      letterSpacing: '-0.02em',
+                      color: '#0B0B0C',
+                      marginBottom: 10,
+                      lineHeight: 1.25,
+                    }}>
+                      {svc.title}
+                    </h3>
+
+                    <p style={{
+                      fontSize: '0.91rem',
+                      color: '#6B6A66',
+                      lineHeight: 1.72,
+                      margin: 0,
+                    }}>
+                      {svc.desc}
+                    </p>
                   </div>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-        </section>
 
-        {/* Wave: services white → narrs dark */}
-        <div style={{ lineHeight: 0, background: '#0d0d0f', marginTop: -1 }}>
-          <svg viewBox="0 0 1440 36" preserveAspectRatio="none" style={{ display: 'block', width: '100%', height: 36 }}>
-            <path d="M0,0 C480,36 960,0 1440,0 L1440,36 L0,36 Z" fill="#fff" />
-          </svg>
-        </div>
-
-        {/* ── 3. Narrs ── */}
-        <section id="narrs" aria-label="Narrs Technologies" style={{ background: '#0d0d0f', position: 'relative', overflow: 'hidden', padding: 'clamp(80px,10vw,130px) clamp(24px,6vw,80px)' }}>
-          {/* Glow blobs */}
-          <div style={{ position: 'absolute', top: '5%', left: '-5%', width: 560, height: 560, background: 'radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%)', filter: 'blur(90px)', pointerEvents: 'none' }} />
-          <div style={{ position: 'absolute', bottom: '10%', right: '-5%', width: 420, height: 420, background: 'radial-gradient(circle, rgba(139,92,246,0.09) 0%, transparent 70%)', filter: 'blur(70px)', pointerEvents: 'none' }} />
-
-          <div style={{ maxWidth: 1300, margin: '0 auto', position: 'relative', zIndex: 1 }}>
-
-            {/* Two-column top */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(40px,6vw,96px)', alignItems: 'start' }} className="narrs-grid">
-
-              {/* Left — text */}
-              <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.1 }}>
-                <motion.div variants={fadeDown} style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 32 }}>
-                  <span style={{ width: 28, height: 1, background: 'rgba(255,255,255,0.3)', display: 'inline-block' }} />
-                  <span style={{ fontSize: '0.66rem', fontWeight: 800, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)' }}>The Company</span>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 24, paddingTop: 18, borderTop: '1px solid rgba(11,11,12,0.06)' }}>
+                    {svc.tags.map(tag => (
+                      <span key={tag} style={{
+                        fontSize: '0.68rem',
+                        fontWeight: 600,
+                        padding: '4px 10px',
+                        borderRadius: 999,
+                        background: '#F7F6F2',
+                        color: '#4A4944',
+                        letterSpacing: '0.02em',
+                      }}>
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </motion.div>
-
-                <LineByLine
-                  tag="h2"
-                  style={{ fontFamily: 'var(--font-playfair),Georgia,serif', fontSize: 'clamp(2.2rem,4vw,4.4rem)', fontWeight: 900, lineHeight: 1.08, letterSpacing: '-0.035em', color: '#fff', marginBottom: 28 }}
-                  lines={['Narrs builds the software', 'layer for modern businesses.']}
-                />
-
-                <motion.p variants={fadeUp} style={{ fontSize: 'clamp(0.88rem,1vw,1rem)', color: 'rgba(255,255,255,0.45)', lineHeight: 1.85, marginBottom: 32, maxWidth: 480 }}>
-                  Narrs is an IT and software company from India. We build SaaS products, web applications, and AI-powered systems that help businesses operate with more speed, clarity, and intelligence.
-                </motion.p>
-
-                {/* Tags */}
-                <motion.div variants={fadeUp} style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 40 }}>
-                  {['SaaS Products', 'Web Apps', 'AI Systems', 'Mobile', 'UI/UX Design', 'Automation'].map(tag => (
-                    <span key={tag} style={{ fontSize: '0.72rem', fontWeight: 600, padding: '7px 16px', borderRadius: 999, border: '1px solid rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.5)', letterSpacing: '0.02em', background: 'rgba(255,255,255,0.04)' }}>{tag}</span>
-                  ))}
-                </motion.div>
-
-                <motion.a href="https://narrs.in" target="_blank" rel="noreferrer" variants={scaleUp}
-                  style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '14px 28px', borderRadius: 999, background: '#fff', color: '#0d0d0f', fontSize: '0.88rem', fontWeight: 700, letterSpacing: '-0.01em', textDecoration: 'none' }}>
-                  Visit narrs.in
-                  <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 26, height: 26, borderRadius: '50%', background: '#0d0d0f', color: '#fff' }}>
-                    <ArrowRight size={13} strokeWidth={2.5} />
-                  </span>
-                </motion.a>
-              </motion.div>
-
-              {/* Right — stat bento + screenshot */}
-              <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.1 }} style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 3 }}>
-                  {[
-                    { num: '10+', label: 'Projects Delivered', sub: 'and counting', r: '14px 0 0 0' },
-                    { num: '5+',  label: 'Happy Clients',       sub: 'across industries', r: '0 14px 0 0' },
-                    { num: '2026', label: 'Founded',            sub: 'Narrs Technologies', r: '0 0 0 14px' },
-                    { num: '∞',   label: 'Ambition',            sub: 'no ceiling', r: '0 0 14px 0' },
-                  ].map((s, i) => (
-                    <motion.div key={s.num} variants={fadeUp} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: s.r, padding: '28px 24px' }}>
-                      <span style={{ display: 'block', fontFamily: 'var(--font-playfair),Georgia,serif', fontSize: 'clamp(2rem,3vw,3rem)', fontWeight: 900, color: '#fff', lineHeight: 1, marginBottom: 8 }}>{s.num}</span>
-                      <span style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: 'rgba(255,255,255,0.65)', marginBottom: 3 }}>{s.label}</span>
-                      <span style={{ display: 'block', fontSize: '0.68rem', color: 'rgba(255,255,255,0.22)', letterSpacing: '0.04em' }}>{s.sub}</span>
-                    </motion.div>
-                  ))}
-                </div>
-
-                {/* narrs.in screenshot preview */}
-                <motion.a href="https://narrs.in" target="_blank" rel="noreferrer" variants={fadeUp}
-                  style={{ display: 'block', borderRadius: '0 0 14px 14px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.07)', borderTop: 'none', textDecoration: 'none', position: 'relative' }}>
-                  <div style={{ height: 190, background: '#111', overflow: 'hidden', position: 'relative' }}>
-                    <img src={`${SHOT}https://narrs.in`} alt="narrs.in preview" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', filter: 'brightness(0.82)' }} />
-                    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(13,13,15,0.65) 0%, transparent 55%)' }} />
-                  </div>
-                  <div style={{ padding: '14px 20px', background: 'rgba(255,255,255,0.04)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <div>
-                      <p style={{ fontSize: '0.82rem', fontWeight: 700, color: '#fff', margin: 0 }}>narrs.in</p>
-                      <p style={{ fontSize: '0.68rem', color: 'rgba(255,255,255,0.32)', margin: 0, marginTop: 2 }}>Software · AI · Digital Transformation</p>
-                    </div>
-                    <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 32, height: 32, borderRadius: '50%', border: '1px solid rgba(255,255,255,0.15)', color: 'rgba(255,255,255,0.5)' }}>
-                      <ArrowRight size={14} strokeWidth={1.8} />
-                    </span>
-                  </div>
-                </motion.a>
-              </motion.div>
+              ))}
             </div>
 
             {/* Tech stack marquee */}
             <style>{`
               @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
             `}</style>
-            <div style={{ marginTop: 72, paddingTop: 48, borderTop: '1px solid rgba(255,255,255,0.07)' }}>
-              <p style={{ fontSize: '0.62rem', fontWeight: 800, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.18)', marginBottom: 24, textAlign: 'center' }}>Tech Stack</p>
+            <div style={{ paddingTop: 36, borderTop: '1px solid rgba(11,11,12,0.08)' }}>
+              <p style={{ fontSize: '0.62rem', fontWeight: 800, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#6B6A66', marginBottom: 22, textAlign: 'center' }}>
+                Core Technologies &amp; Tools
+              </p>
 
               {/* Row 1 → left */}
               <div style={{ overflow: 'hidden', marginBottom: 10 }}>
                 <div style={{ display: 'flex', gap: 10, width: 'max-content', animation: 'marquee 32s linear infinite' }}>
                   {[...STACK_1, ...STACK_1].map((item, i) => (
-                    <span key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '9px 18px 9px 12px', borderRadius: 999, border: '1px solid rgba(255,255,255,0.09)', color: 'rgba(255,255,255,0.55)', fontSize: '0.82rem', fontWeight: 500, whiteSpace: 'nowrap', background: 'rgba(255,255,255,0.04)' }}>
+                    <span key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '9px 18px 9px 12px', borderRadius: 999, border: '1px solid rgba(11,11,12,0.08)', color: '#0B0B0C', fontSize: '0.82rem', fontWeight: 600, whiteSpace: 'nowrap', background: '#fff', boxShadow: '0 1px 4px rgba(0,0,0,0.03)' }}>
                       <img src={item.icon} alt={item.name} width={18} height={18} style={{ flexShrink: 0, objectFit: 'contain' }} />
                       {item.name}
                     </span>
@@ -1391,7 +1290,7 @@ export default function HomePage() {
               <div style={{ overflow: 'hidden' }}>
                 <div style={{ display: 'flex', gap: 10, width: 'max-content', animation: 'marquee 28s linear infinite reverse' }}>
                   {[...STACK_2, ...STACK_2].map((item, i) => (
-                    <span key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '9px 18px 9px 12px', borderRadius: 999, border: '1px solid rgba(255,255,255,0.09)', color: 'rgba(255,255,255,0.55)', fontSize: '0.82rem', fontWeight: 500, whiteSpace: 'nowrap', background: 'rgba(255,255,255,0.04)' }}>
+                    <span key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '9px 18px 9px 12px', borderRadius: 999, border: '1px solid rgba(11,11,12,0.08)', color: '#0B0B0C', fontSize: '0.82rem', fontWeight: 600, whiteSpace: 'nowrap', background: '#fff', boxShadow: '0 1px 4px rgba(0,0,0,0.03)' }}>
                       <img src={item.icon} alt={item.name} width={18} height={18} style={{ flexShrink: 0, objectFit: 'contain' }} />
                       {item.name}
                     </span>
@@ -1399,277 +1298,14 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-
-        {/* ── 3b. Vision ── */}
-        <section id="vision" aria-label="Vision and journey" style={{ background: '#05050a', position: 'relative', overflow: 'hidden', padding: 'clamp(88px,11vw,150px) clamp(24px,6vw,80px) clamp(72px,9vw,120px)' }}>
-          {/* Wave divider at top */}
-          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, lineHeight: 0, pointerEvents: 'none' }}>
-            <svg viewBox="0 0 1440 56" preserveAspectRatio="none" style={{ width: '100%', height: 56, display: 'block' }}>
-              <path d="M0,32 C480,64 960,0 1440,32 L1440,0 L0,0 Z" fill="#0d0d0f" />
-            </svg>
-          </div>
-
-          {/* Center glow */}
-          <div style={{ position: 'absolute', top: '30%', left: '50%', transform: 'translateX(-50%)', width: 700, height: 700, background: 'radial-gradient(circle, rgba(139,92,246,0.1) 0%, transparent 65%)', filter: 'blur(100px)', pointerEvents: 'none' }} />
-
-          <div style={{ maxWidth: 1300, margin: '0 auto', position: 'relative', zIndex: 1 }}>
-
-            {/* Two-column: left = text, right = orbital */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', gap: 'clamp(48px,8vw,120px)', alignItems: 'center', marginBottom: 96 }} className="vision-grid">
-
-              {/* Left — text */}
-              <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.1 }}>
-                {/* Portrait */}
-                <motion.div variants={fadeUp} style={{ marginBottom: 36 }}>
-                  <div style={{ position: 'relative', display: 'inline-block' }}>
-                    <div style={{ width: 88, height: 88, borderRadius: '50%', overflow: 'hidden', border: '2px solid rgba(255,255,255,0.18)' }}>
-                      <img src="/mohammed%20raees%20img%2C3.PNG" alt="Mohammed Raees" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 15%', filter: 'brightness(0.88) saturate(0.85)' }} />
-                    </div>
-                    {/* Online dot */}
-                    <span style={{ position: 'absolute', bottom: 4, right: -4, width: 20, height: 20, borderRadius: '50%', background: '#22c55e', border: '2.5px solid #05050a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#fff' }} />
-                    </span>
-                  </div>
-                </motion.div>
-
-                {/* Kicker */}
-                <motion.div variants={fadeDown} style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 22 }}>
-                  <span style={{ width: 24, height: 1, background: 'rgba(255,255,255,0.3)', display: 'inline-block' }} />
-                  <span style={{ fontSize: '0.65rem', fontWeight: 800, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)' }}>Vision</span>
-                </motion.div>
-
-                <LineByLine
-                  tag="h2"
-                  style={{ fontFamily: 'var(--font-playfair),Georgia,serif', fontSize: 'clamp(2rem,3.8vw,4rem)', fontWeight: 900, lineHeight: 1.08, letterSpacing: '-0.035em', color: '#fff', marginBottom: 24 }}
-                  lines={['Leading Through', 'Vision & Innovation']}
-                />
-
-                <motion.p variants={fadeUp} style={{ fontSize: '0.92rem', color: 'rgba(255,255,255,0.44)', lineHeight: 1.85, marginBottom: 14, maxWidth: 520 }}>
-                  Mohammed Raees is the Founder and Chief Operating Officer of NARRS, focused on creating impactful digital solutions that combine strategy, design, and technology.
-                </motion.p>
-                <motion.p variants={fadeUp} style={{ fontSize: '0.92rem', color: 'rgba(255,255,255,0.44)', lineHeight: 1.85, marginBottom: 32, maxWidth: 520 }}>
-                  His mission is to help businesses establish powerful digital identities while building innovative products that drive long-term growth. Mohammed bridges the gap between vision and execution.
-                </motion.p>
-
-                {/* Expertise pills */}
-                <motion.div variants={fadeUp} style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-                  {['Full Stack Dev', 'AI Integration', 'Product Strategy', 'UI/UX Design', 'Team Leadership'].map(skill => (
-                    <span key={skill} style={{ fontSize: '0.72rem', fontWeight: 600, padding: '7px 16px', borderRadius: 999, background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.6)' }}>{skill}</span>
-                  ))}
-                </motion.div>
-              </motion.div>
-
-              {/* Right — rotating glass cards orbit */}
-              <div className="vision-orbital-wrap" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <div style={{ position: 'relative', width: 520, height: 520, flexShrink: 0 }}>
-
-                  {/* Soft ambient glow */}
-                  <div style={{ position: 'absolute', inset: '15%', borderRadius: '50%', background: 'radial-gradient(circle, rgba(99,102,241,0.14) 0%, transparent 70%)', pointerEvents: 'none' }} />
-
-                  {/* Orbit track */}
-                  <div style={{ position: 'absolute', inset: 60, borderRadius: '50%', border: '1px solid rgba(255,255,255,0.05)', pointerEvents: 'none' }} />
-
-                  {/* Rotating ring — dashboard stat cards */}
-                  <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 54, repeat: Infinity, ease: 'linear' }}
-                    style={{ position: 'absolute', inset: 0 }}
-                  >
-                    {[
-                      {
-                        label: 'PROJECTS', stat: '12+', accent: '#b8e000',
-                        chart: (
-                          <svg width="100%" height="26" viewBox="0 0 120 26" preserveAspectRatio="none">
-                            {[6, 9, 13, 17, 21, 26].map((h, idx) => (
-                              <rect key={idx} x={idx * 20} y={26 - h} width={14} height={h} rx={2.5}
-                                fill="#b8e000" fillOpacity={0.18 + idx * 0.14} />
-                            ))}
-                          </svg>
-                        ),
-                      },
-                      {
-                        label: 'AI MODELS', stat: '8', accent: '#a78bfa',
-                        chart: (
-                          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                            <svg width="30" height="30" viewBox="0 0 30 30" style={{ flexShrink: 0 }}>
-                              <circle cx="15" cy="15" r="11" fill="none" stroke="rgba(167,139,250,0.15)" strokeWidth="3" />
-                              <circle cx="15" cy="15" r="11" fill="none" stroke="#a78bfa" strokeWidth="3"
-                                strokeDasharray="55.3 69.1" strokeLinecap="round" transform="rotate(-90 15 15)" />
-                              <text x="15" y="19.5" textAnchor="middle" fontSize="7.5" fontWeight="800" fill="white">80%</text>
-                            </svg>
-                            <div>
-                              <p style={{ margin: 0, fontSize: '0.52rem', fontWeight: 700, color: 'rgba(167,139,250,0.85)', lineHeight: 1 }}>Active</p>
-                              <p style={{ margin: '2px 0 0', fontSize: '0.46rem', color: 'rgba(255,255,255,0.28)', lineHeight: 1, letterSpacing: '0.04em' }}>Integrations</p>
-                            </div>
-                          </div>
-                        ),
-                      },
-                      {
-                        label: 'MOBILE APPS', stat: '4', accent: '#22d3ee',
-                        chart: (
-                          <svg width="100%" height="26" viewBox="0 0 120 26" preserveAspectRatio="none">
-                            <defs>
-                              <linearGradient id="oc-cg1" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stopColor="#22d3ee" stopOpacity="0.28" />
-                                <stop offset="100%" stopColor="#22d3ee" stopOpacity="0" />
-                              </linearGradient>
-                            </defs>
-                            <polygon points="0,26 24,22 48,20 72,12 96,8 120,2 120,26" fill="url(#oc-cg1)" />
-                            <polyline points="0,26 24,22 48,20 72,12 96,8 120,2" fill="none" stroke="#22d3ee" strokeWidth="1.5" strokeLinejoin="round" strokeLinecap="round" />
-                            <circle cx="120" cy="2" r="3" fill="#22d3ee" />
-                          </svg>
-                        ),
-                      },
-                      {
-                        label: 'SATISFACTION', stat: '98%', accent: '#fb7185',
-                        chart: (
-                          <div style={{ display: 'flex', alignItems: 'flex-end', gap: 3, height: 26 }}>
-                            {[38, 50, 44, 60, 55, 74, 98].map((v, idx) => (
-                              <div key={idx} style={{ flex: 1, height: (v / 100) * 26, borderRadius: 2.5, background: idx === 6 ? '#fb7185' : `rgba(251,113,133,${0.1 + idx * 0.055})` }} />
-                            ))}
-                          </div>
-                        ),
-                      },
-                      {
-                        label: 'UPTIME', stat: '99.9%', accent: '#b8e000',
-                        chart: (
-                          <div>
-                            <div style={{ height: 7, background: 'rgba(255,255,255,0.06)', borderRadius: 99, overflow: 'hidden', marginBottom: 5 }}>
-                              <div style={{ height: '100%', width: '99.9%', background: 'linear-gradient(90deg, rgba(184,224,0,0.45), #b8e000)', borderRadius: 99 }} />
-                            </div>
-                            <div style={{ display: 'flex', gap: 2 }}>
-                              {Array.from({ length: 15 }).map((_, idx) => (
-                                <div key={idx} style={{ flex: 1, height: 5, borderRadius: 1.5, background: idx < 14 ? 'rgba(184,224,0,0.48)' : 'rgba(255,255,255,0.07)' }} />
-                              ))}
-                            </div>
-                          </div>
-                        ),
-                      },
-                      {
-                        label: 'GROWTH', stat: '3×', accent: '#a78bfa',
-                        chart: (
-                          <svg width="100%" height="26" viewBox="0 0 120 26" preserveAspectRatio="none">
-                            <defs>
-                              <linearGradient id="oc-cg2" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stopColor="#a78bfa" stopOpacity="0.32" />
-                                <stop offset="100%" stopColor="#a78bfa" stopOpacity="0" />
-                              </linearGradient>
-                            </defs>
-                            <polygon points="0,26 30,22 60,17 90,10 120,1 120,26" fill="url(#oc-cg2)" />
-                            <polyline points="0,26 30,22 60,17 90,10 120,1" fill="none" stroke="#a78bfa" strokeWidth="1.5" strokeLinejoin="round" strokeLinecap="round" />
-                            <circle cx="120" cy="1" r="3" fill="#a78bfa" />
-                          </svg>
-                        ),
-                      },
-                    ].map((card, i) => {
-                      const angle = ((i / 6) * 360 - 90) * (Math.PI / 180);
-                      const cx = 260 + 200 * Math.cos(angle);
-                      const cy = 260 + 200 * Math.sin(angle);
-                      return (
-                        <div key={card.label} style={{ position: 'absolute', left: cx, top: cy, transform: 'translate(-50%,-50%)' }}>
-                          <motion.div
-                            animate={{ rotate: -360 }}
-                            transition={{ duration: 54, repeat: Infinity, ease: 'linear' }}
-                            style={{
-                              width: 142, height: 90,
-                              borderRadius: 12,
-                              background: 'rgba(12,12,18,0.94)',
-                              border: '1px solid rgba(255,255,255,0.07)',
-                              backdropFilter: 'blur(24px)',
-                              WebkitBackdropFilter: 'blur(24px)',
-                              boxShadow: '0 12px 40px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.06)',
-                              padding: '10px 12px 10px',
-                              display: 'flex',
-                              flexDirection: 'column',
-                              justifyContent: 'space-between',
-                              position: 'relative',
-                              overflow: 'hidden',
-                            }}
-                          >
-                            {/* Top accent gradient line */}
-                            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg, ${card.accent}cc 0%, transparent 65%)` }} />
-                            {/* Header */}
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                              <div>
-                                <p style={{ margin: 0, fontSize: '0.44rem', fontWeight: 700, color: 'rgba(255,255,255,0.26)', letterSpacing: '0.1em', lineHeight: 1, textTransform: 'uppercase' }}>{card.label}</p>
-                                <p style={{ margin: '3px 0 0', fontSize: '1.05rem', fontWeight: 800, color: '#fff', lineHeight: 1, letterSpacing: '-0.02em' }}>{card.stat}</p>
-                              </div>
-                              <div style={{ width: 5, height: 5, borderRadius: '50%', background: card.accent, boxShadow: `0 0 8px ${card.accent}99`, marginTop: 2, flexShrink: 0 }} />
-                            </div>
-                            {/* Chart */}
-                            <div style={{ width: '100%' }}>{card.chart}</div>
-                          </motion.div>
-                        </div>
-                      );
-                    })}
-                  </motion.div>
-
-                  {/* Center — Narrs logo */}
-                  <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 10 }}>
-                    <motion.div
-                      animate={{ boxShadow: ['0 0 28px rgba(180,220,40,0.18)', '0 0 56px rgba(180,220,40,0.38)', '0 0 28px rgba(180,220,40,0.18)'] }}
-                      transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
-                      style={{
-                        width: 120, height: 120, borderRadius: '50%',
-                        background: '#000',
-                        border: '1.5px solid rgba(255,255,255,0.1)',
-                        overflow: 'hidden',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      }}
-                    >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src="/narrs-logo.png"
-                        alt="Narrs Technologies"
-                        style={{ width: '72%', height: '72%', objectFit: 'contain' }}
-                      />
-                    </motion.div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-
-            {/* Timeline — connected dots */}
-            <div style={{ position: 'relative' }}>
-              {/* Connecting line */}
-              <div style={{ position: 'absolute', top: 20, left: '12.5%', right: '12.5%', height: 1, background: 'linear-gradient(to right, transparent, rgba(255,255,255,0.18) 20%, rgba(255,255,255,0.18) 80%, transparent)' }} />
-
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 0 }} className="vision-timeline-grid">
-                {[
-                  { year: '2024',   title: 'Started Technology Journey', desc: 'Began exploring full-stack development and modern technologies',  dot: 'rgba(255,255,255,0.4)' },
-                  { year: '2025',   title: 'Expanded Solutions',          desc: 'Web & mobile development, AI integration expertise',              dot: 'rgba(255,255,255,0.6)' },
-                  { year: '2026',   title: 'Founded NARRS',               desc: 'Building the future of digital innovation',                       dot: '#fff' },
-                  { year: 'Future', title: 'Global Vision',               desc: 'Scaling impact across industries worldwide',                      dot: '#a78bfa' },
-                ].map((item, i) => (
-                  <motion.div
-                    key={item.year}
-                    variants={fadeUp}
-                    initial="hidden"
-                    whileInView="show"
-                    viewport={{ once: true, amount: 0.2 }}
-                    transition={{ delay: 0.1 * i }}
-                    style={{ padding: '48px 28px 28px', borderRight: i < 3 ? '1px solid rgba(255,255,255,0.06)' : 'none', position: 'relative', textAlign: 'center' }}
-                  >
-                    {/* Dot */}
-                    <div style={{ position: 'absolute', top: 12, left: '50%', transform: 'translateX(-50%)', width: 16, height: 16, borderRadius: '50%', background: item.dot, border: '2.5px solid #05050a', boxShadow: `0 0 16px ${item.dot}` }} />
-                    <span style={{ display: 'block', fontSize: '0.65rem', fontWeight: 800, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.28)', marginBottom: 14 }}>{item.year}</span>
-                    <h3 style={{ fontSize: '0.95rem', fontWeight: 600, color: '#fff', marginBottom: 10, lineHeight: 1.3, letterSpacing: '-0.01em' }}>{item.title}</h3>
-                    <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.35)', lineHeight: 1.65 }}>{item.desc}</p>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
 
           </div>
         </section>
 
-        {/* Wave: vision dark → work beige */}
+        {/* Wave: services light → work beige */}
         <div style={{ lineHeight: 0, background: '#F0EFE9', marginTop: -1 }}>
           <svg viewBox="0 0 1440 36" preserveAspectRatio="none" style={{ display: 'block', width: '100%', height: 36 }}>
-            <path d="M0,0 C480,36 960,0 1440,0 L1440,36 L0,36 Z" fill="#05050a" />
+            <path d="M0,0 C480,36 960,0 1440,36 L1440,0 L0,0 Z" fill="#FAFAF8" />
           </svg>
         </div>
 
@@ -1793,23 +1429,22 @@ export default function HomePage() {
                 <span className="ft-link">Cloud-Native Solutions</span>
               </div>
 
-              {/* Col 4 — Company */}
+              {/* Col 4 — Connect */}
               <div className="ft-col">
-                <p className="ft-col-head">Company</p>
-                <a className="ft-link" href="mailto:raeeeesss0@gmail.com">Work with us</a>
-                <a className="ft-link" href="https://narrs.in" target="_blank" rel="noreferrer">Company Profile</a>
-                <a className="ft-link" href="mailto:raeeeesss0@gmail.com">Contact</a>
-                <a className="ft-link" href="https://narrs.in" target="_blank" rel="noreferrer">Official Links</a>
+                <p className="ft-col-head">Connect</p>
+                <a className="ft-link" href="mailto:raeeeesss0@gmail.com">Work With Me</a>
+                <a className="ft-link" href="#work">Featured Projects</a>
+                <a className="ft-link" href="mailto:raeeeesss0@gmail.com">Get in Touch</a>
+                <a className="ft-link" href="#cv">Background &amp; CV</a>
               </div>
             </div>
 
             {/* Bottom bar */}
             <div className="ft-bottom">
-              <p className="ft-copy">&copy; 2026 Mohammed Raees</p>
+              <p className="ft-copy">&copy; 2026 Mohammed Raees. All rights reserved.</p>
               <div className="ft-legal">
                 <a href="mailto:raeeeesss0@gmail.com" className="ft-legal-link">Contact</a>
-
-                <a href="https://narrs.in" target="_blank" rel="noreferrer" className="ft-legal-link">Narrs Technologies</a>
+                <a href="#home" className="ft-legal-link">Back to Top</a>
               </div>
             </div>
 

@@ -180,7 +180,7 @@ export default function Hero({ sectionRef }) {
             letterSpacing: '0.08em',
           }}
         >
-          founder or visionary
+          full stack developer
         </motion.p>
       </div>
 
@@ -206,7 +206,7 @@ export default function Hero({ sectionRef }) {
           lineHeight: 1.75,
           margin: 0,
         }}>
-          Founder &amp; COO of Narrs Technologies.<br />
+          Full Stack Developer &amp; Software Engineer.<br />
           Building AI-powered products<br />
           and digital experiences.
         </p>

@@ -45,9 +45,9 @@ const playfair = Playfair_Display({
 });
 
 export const metadata = {
-  title: "Mohammed Raees — Founder & Full Stack Developer",
+  title: "Mohammed Raees — Full Stack Developer & Software Engineer",
   description:
-    "Founder & COO of Narrs Technologies. Building AI-powered SaaS products and immersive digital experiences across the modern stack.",
+    "Full Stack Developer & Software Engineer building AI-powered SaaS products and immersive digital experiences across the modern stack.",
 };
 
 export default function RootLayout({ children }) {
